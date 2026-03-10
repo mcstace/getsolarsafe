@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solar Safe – Bird Proofing for Solar Panels</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #F5871A;
+      --orange-bg: #FFF4EA;
+      --black: #111111;
+      --text: #333333;
+      --muted: #777777;
+      --border: #E8E8E8;
+      --bg: #F9F9F9;
+      --white: #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Nunito Sans', Calibri, 'Gill Sans', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--black);
+    }
+
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: var(--orange);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+
+    .logo span { color: var(--orange); }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 600;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    .btn-cta {
+      background: var(--orange); color: white;
+      padding: 9px 20px; border-radius: 6px;
+      font-size: 0.875rem; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .btn-cta:hover { background: #e07a15; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 110px 48px 72px;
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--orange-bg);
+      color: var(--orange);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(245,135,26,0.2);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 18px;
+    }
+
+    h1 span { color: var(--orange); }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 430px;
+    }
+
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--orange); color: white;
+      padding: 13px 26px; border-radius: 7px;
+      font-size: 0.95rem; font-weight: 700;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      box-shadow: 0 2px 12px rgba(245,135,26,0.3);
+    }
+    .btn-primary:hover { background: #e07a15; transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; color: var(--black);
+      padding: 13px 22px; border-radius: 7px;
+      font-size: 0.95rem; font-weight: 600;
+      text-decoration: none;
+      border: 1.5px solid var(--border);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .btn-outline:hover { border-color: #bbb; background: var(--bg); }
+
+    /* Hero photos */
+    .hero-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 240px 120px;
+      gap: 8px;
+    }
+
+    .hp {
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hp.tall { grid-column: span 2; grid-row: span 1; height: 240px; }
+    .hp img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+
+    .hp-label {
+      position: absolute; bottom: 10px; left: 10px;
+      background: rgba(0,0,0,0.55);
+      color: white; font-size: 0.7rem; font-weight: 700;
+      padding: 4px 10px; border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-pill {
+      background: var(--orange);
+      color: white;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center; padding: 16px;
+    }
+    .stat-pill strong { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+    .stat-pill span { font-size: 0.72rem; font-weight: 600; opacity: 0.85; margin-top: 3px; }
+
+    /* ── STATS ROW ── */
+    .stats-row {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .stats-inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr);
+    }
+
+    .stat-box {
+      padding: 32px 40px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-box:last-child { border-right: none; }
+
+    .stat-box .num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-box .num em { color: var(--orange); font-style: normal; }
+    .stat-box .lbl { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 1160px; margin: 0 auto;
+      padding: 80px 48px;
+    }
+
+    .section-label {
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+      font-weight: 800;
+      color: var(--black);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    h2 span { color: var(--orange); }
+
+    .section-desc {
+      font-size: 0.97rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 460px;
+    }
+
+    /* Problem */
+    .two-col { display: grid; grid-template-columns: 1fr 1.3fr; gap: 72px; align-items: start; }
+
+    .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 20px;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .card:hover { border-color: #ccc; transform: translateY(-2px); }
+
+    .card-icon {
+      width: 36px; height: 36px;
+      background: white; border: 1px solid var(--border);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-bottom: 12px;
+    }
+
+    .card h3 { font-size: 0.93rem; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+    .card p { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+    /* Photo strip */
+    .photo-strip {
+      display: grid; grid-template-columns: 3fr 2fr;
+      height: 380px; gap: 8px;
+      max-width: 1160px; margin: 0 auto 0;
+      padding: 0 48px 80px;
+    }
+
+    .ps {
+      border-radius: 10px; overflow: hidden; position: relative;
+    }
+    .ps img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .ps-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%);
+    }
+    .ps-label {
+      position: absolute; bottom: 18px; left: 18px; color: white;
+    }
+    .ps-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .ps-label h3 { font-size: 1rem; font-weight: 700; }
+
+    /* Steps */
+    .steps-bg { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; margin-top: 48px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
+
+    .step {
+      background: white; padding: 36px 30px;
+    }
+
+    .step-num {
+      font-size: 2.8rem; font-weight: 800;
+      color: var(--border); line-height: 1;
+      margin-bottom: 18px;
+    }
+
+    .step-dot { width: 7px; height: 7px; background: var(--orange); border-radius: 50%; margin-bottom: 12px; }
+    .step h3 { font-size: 0.95rem; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .step p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+    /* Why */
+    .why-col { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; }
+
+    .why-items { margin-top: 40px; }
+
+    .wi {
+      display: flex; gap: 16px; padding: 22px 0;
+      border-bottom: 1px solid var(--border); align-items: flex-start;
+      transition: padding-left 0.15s;
+    }
+    .wi:first-child { border-top: 1px solid var(--border); }
+    .wi:hover { padding-left: 5px; }
+
+    .wi-n { font-size: 0.78rem; font-weight: 700; color: #ccc; min-width: 20px; padding-top: 2px; }
+    .wi h3 { font-size: 0.92rem; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+    .wi p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
+
+    .why-card {
+      background: var(--black); color: white;
+      border-radius: 12px; padding: 44px 36px;
+      position: relative; overflow: hidden;
+    }
+    .why-card::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(245,135,26,0.15) 0%, transparent 65%);
+    }
+
+    .why-big { font-size: 4.5rem; font-weight: 800; color: var(--orange); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .why-sub { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 28px; line-height: 1.5; }
+    .why-hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 24px; }
+    .why-q { font-size: 0.97rem; color: rgba(255,255,255,0.78); line-height: 1.7; font-style: italic; }
+    .why-attr { margin-top: 10px; font-size: 0.72rem; color: rgba(255,255,255,0.28); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* CTA band */
+    .cta-band { background: var(--orange); padding: 64px 48px; }
+    .cta-in {
+      max-width: 1160px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
+    }
+
+    .cta-band h2 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); color: white; margin-bottom: 6px; }
+    .cta-band p { font-size: 0.93rem; color: rgba(255,255,255,0.72); }
+
+    .btn-white {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: white; color: var(--orange);
+      padding: 13px 24px; border-radius: 7px;
+      font-size: 0.9rem; font-weight: 700; text-decoration: none;
+      transition: transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .btn-white:hover { transform: translateY(-1px); box-shadow: 0 5px 18px rgba(0,0,0,0.15); }
+
+    .btn-white-o {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: white;
+      padding: 13px 20px; border-radius: 7px;
+      font-size: 0.9rem; font-weight: 600; text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.5);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-white-o:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+    /* Contact */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: start; }
+
+    .contact-items { margin-top: 36px; }
+
+    .ci {
+      display: flex; gap: 14px; align-items: center;
+      padding: 18px 0; border-bottom: 1px solid var(--border);
+    }
+    .ci:first-child { border-top: 1px solid var(--border); }
+
+    .ci-icon {
+      width: 38px; height: 38px; background: var(--bg);
+      border: 1px solid var(--border); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; flex-shrink: 0;
+    }
+
+    .ci-lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 2px; }
+    .ci-val { font-size: 0.93rem; font-weight: 700; color: var(--black); }
+    .ci-val a { color: var(--black); text-decoration: none; }
+    .ci-val a:hover { color: var(--orange); }
+
+    /* Form */
+    .form { display: flex; flex-direction: column; gap: 12px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fg { display: flex; flex-direction: column; gap: 5px; }
+
+    .fg label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+
+    .fg input,
+    .fg select,
+    .fg textarea {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 7px; padding: 11px 14px;
+      color: var(--black); font-family: inherit;
+      font-size: 0.9rem; outline: none;
+      transition: border-color 0.15s, background 0.15s;
+      resize: none; -webkit-appearance: none;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      border-color: var(--orange); background: white;
+    }
+    .fg input::placeholder, .fg textarea::placeholder { color: #bbb; }
+
+    .btn-sub {
+      width: 100%; background: var(--black); color: white;
+      font-family: inherit; font-size: 0.92rem; font-weight: 700;
+      padding: 14px; border-radius: 7px; border: none;
+      cursor: pointer; transition: background 0.15s, transform 0.1s;
+      margin-top: 2px;
+    }
+    .btn-sub:hover { background: #222; transform: translateY(-1px); }
+    .btn-sub.sent { background: #166916; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    .f-left .brand { font-size: 0.97rem; font-weight: 800; color: var(--black); }
+    .f-left .brand span { color: var(--orange); }
+    .f-left .copy { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+    .f-links { display: flex; gap: 20px; }
+    .f-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; font-weight: 600; }
+    .f-links a:hover { color: var(--black); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 90px 20px 56px; gap: 40px; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .stats-inner .stat-box:last-child { grid-column: span 2; }
+      .section { padding: 64px 20px; }
+      .two-col, .why-col, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .photo-strip { padding: 0 20px 64px; height: auto; grid-template-columns: 1fr; height: 280px; }
+      .cta-band { padding: 52px 20px; }
+      .cta-in { flex-direction: column; align-items: flex-start; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-icon">🐦</div>
+    Solar Safe<span>.</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="btn-cta">Get a Free Quote</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1160px;margin:0 auto;">
+  <section class="hero">
+    <div>
+      <div class="hero-badge">Utah's #1 Solar Bird Proofing</div>
+      <h1>Pigeons are ruining your <span>solar panels.</span></h1>
+      <p class="hero-sub">Nests, droppings, and debris build up under your panels every day — silently draining efficiency, voiding warranties, and creating real fire risk. We stop it permanently.</p>
+      <div class="hero-btns">
+        <a href="tel:8016387723" class="btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.29 1.23 2 2 0 012.29.04h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.23-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (801) 638-7723
+        </a>
+        <a href="#contact" class="btn-outline">Get a Free Quote →</a>
+      </div>
+    </div>
+    <div class="hero-photos">
+      <div class="hp tall">
+        <img src="https://i.imgur.com/WhRUv0m.jpeg" alt="Pigeon damage on solar panels" />
+        <div class="hp-label">Real Pigeon Damage</div>
+      </div>
+      <div class="hp">
+        <img src="https://i.imgur.com/8gzwgo9.jpeg" alt="Debris under solar panels" />
+        <div class="hp-label">Nesting Debris</div>
+      </div>
+      <div class="stat-pill">
+        <strong>10K+</strong>
+        <span>Panels Protected</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stats-inner">
+    <div class="stat-box reveal">
+      <div class="num">10,000<em>+</em></div>
+      <div class="lbl">Panels Serviced & Protected</div>
+    </div>
+    <div class="stat-box reveal">
+      <div class="num">$<em>Millions</em></div>
+      <div class="lbl">In Solar Investments Saved</div>
+    </div>
+    <div class="stat-box reveal">
+      <div class="num">1<em> Visit</em></div>
+      <div class="lbl">Most Jobs Completed Same Day</div>
+    </div>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<section class="section" id="problem">
+  <div class="two-col">
+    <div>
+      <div class="section-label reveal">The Problem</div>
+      <h2 class="reveal">Your panels are under attack <span>right now.</span></h2>
+      <p class="section-desc reveal" style="margin-top:12px;">Most homeowners don't realize how much damage is already building up under their panels. By the time it's visible, it's already expensive — and pigeons don't leave on their own.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-icon">🔥</div>
+        <h3>Fire Hazard</h3>
+        <p>Dry nesting materials against hot wiring are a real fire risk right on your roof.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">⚡</div>
+        <h3>Lost Efficiency</h3>
+        <p>Nests and droppings block sunlight and reduce your system's daily output.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">🐦</div>
+        <h3>It Gets Worse</h3>
+        <p>Once pigeons nest, they return in larger numbers. It never fixes itself.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-icon">📄</div>
+        <h3>Voided Warranties</h3>
+        <p>Pest damage is commonly excluded from solar warranties — you pay the bill.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div class="ps">
+    <img src="https://i.imgur.com/8gzwgo9.jpeg" alt="Solar panel nest damage" />
+    <div class="ps-overlay"></div>
+    <div class="ps-label">
+      <div class="ps-tag">Real Damage</div>
+      <h3>What's hiding under your panels right now</h3>
+    </div>
+  </div>
+  <div class="ps">
+    <img src="https://i.imgur.com/WhRUv0m.jpeg" alt="Before Solar Safe" />
+    <div class="ps-overlay"></div>
+    <div class="ps-label">
+      <div class="ps-tag">Before Solar Safe</div>
+      <h3>Nests & debris accumulate fast</h3>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="steps-bg">
+  <section class="section" id="how">
+    <div style="max-width:480px">
+      <div class="section-label reveal">How It Works</div>
+      <h2 class="reveal">Simple. Fast. <span>Permanent.</span></h2>
+      <p class="section-desc reveal">Non-invasive, clean, and built to last. Your panels stay at full capacity the entire time.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-dot"></div>
+        <h3>Free Inspection</h3>
+        <p>We check your system for nests, damage, and access points — then give you a no-obligation quote on the spot. No surprises.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-dot"></div>
+        <h3>Expert Installation</h3>
+        <p>Industry-grade critter guard mesh is fitted around your panel perimeter — blocking all bird access without touching a single solar cell.</p>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-dot"></div>
+        <h3>Lasting Protection</h3>
+        <p>UV-resistant, weatherproof mesh built to last. Pigeons don't come back — and your investment stays safe for good.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- WHY US -->
+<section class="section" id="why">
+  <div class="why-col">
+    <div>
+      <div class="section-label reveal">Why Solar Safe</div>
+      <h2 class="reveal">Experience that <span>actually matters.</span></h2>
+      <p class="section-desc reveal">We've seen what pigeons do to solar systems thousands of times. That firsthand knowledge is your advantage.</p>
+      <div class="why-items">
+        <div class="wi reveal">
+          <div class="wi-n">01</div>
+          <div>
+            <h3>Solar-Specific Specialists</h3>
+            <p>This is all we do — not a side service. 100% focused on protecting solar investments.</p>
+          </div>
+        </div>
+        <div class="wi reveal">
+          <div class="wi-n">02</div>
+          <div>
+            <h3>Non-Invasive Installation</h3>
+            <p>We never drill into your panels or roof. Your system performs at full capacity throughout.</p>
+          </div>
+        </div>
+        <div class="wi reveal">
+          <div class="wi-n">03</div>
+          <div>
+            <h3>Single-Visit Jobs</h3>
+            <p>Most residential installs are done in one trip. We respect your time and your property.</p>
+          </div>
+        </div>
+        <div class="wi reveal">
+          <div class="wi-n">04</div>
+          <div>
+            <h3>Local & Accountable</h3>
+            <p>Serving Salt Lake Valley and beyond. Real people, real results, real accountability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-big">10K+</div>
+      <div class="why-sub">panels protected across Utah's front range</div>
+      <div class="why-hr"></div>
+      <div class="why-q">"The damage pigeons cause is silent and expensive. We've helped thousands of Utah homeowners stop it before it gets worse."</div>
+      <div class="why-attr">— Solar Safe Team, Utah</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <div class="cta-in">
+    <div>
+      <h2>Ready to protect your panels?</h2>
+      <p>Call now or fill out the form — we'll get back to you fast.</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <a href="tel:8016387723" class="btn-white">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.29 1.23 2 2 0 012.29.04h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.23-.62a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (801) 638-7723
+      </a>
+      <a href="mailto:getsolarsafe@gmail.com" class="btn-white-o">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        getsolarsafe@gmail.com
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-grid">
+    <div>
+      <div class="section-label reveal">Contact</div>
+      <h2 class="reveal">Get your <span>free quote.</span></h2>
+      <p class="section-desc reveal">No pressure, no commitment. Just an honest look at what it'll take to protect your system — for good.</p>
+      <div class="contact-items">
+        <div class="ci reveal">
+          <div class="ci-icon">📞</div>
+          <div>
+            <div class="ci-lbl">Phone</div>
+            <div class="ci-val"><a href="tel:8016387723">(801) 638-7723</a></div>
+          </div>
+        </div>
+        <div class="ci reveal">
+          <div class="ci-icon">✉️</div>
+          <div>
+            <div class="ci-lbl">Email</div>
+            <div class="ci-val"><a href="mailto:getsolarsafe@gmail.com">getsolarsafe@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="ci reveal">
+          <div class="ci-icon">📍</div>
+          <div>
+            <div class="ci-lbl">Service Area</div>
+            <div class="ci-val">Salt Lake Valley & Surrounding Utah</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form reveal">
+      <div class="form-row">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="John" /></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Smith" /></div>
+      </div>
+      <div class="fg"><label>Phone</label><input type="tel" placeholder="(801) 555-0000" /></div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="you@example.com" /></div>
+      <div class="fg">
+        <label>How many panels?</label>
+        <select>
+          <option value="" disabled selected>Select approximate count</option>
+          <option>Under 10 panels</option>
+          <option>10–20 panels</option>
+          <option>20–30 panels</option>
+          <option>30+ panels</option>
+          <option>Commercial / Large system</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message (optional)</label><textarea rows="3" placeholder="Tell us about your situation..."></textarea></div>
+      <button class="btn-sub" onclick="sub(this)">Request Free Quote →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-left">
+    <div class="brand">Solar Safe<span>.</span></div>
+    <div class="copy">© 2025 Solar Safe. All rights reserved.</div>
+  </div>
+  <div class="f-links">
+    <a href="#problem">The Problem</a>
+    <a href="#how">How It Works</a>
+    <a href="#why">Why Us</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:8016387723">(801) 638-7723</a>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(
+    es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.07, rootMargin: '0px 0px -24px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.06 + 's';
+    io.observe(el);
+  });
+
+  function sub(btn) {
+    const form = btn.closest('.form');
+    const name = form.querySelector('input[type=text]').value.trim();
+    if (!name) { alert('Please enter your name so we can reach you!'); return; }
+    form.querySelectorAll('input,select,textarea').forEach(el => el.disabled = true);
+    btn.textContent = '✓ Request sent — we\'ll be in touch soon!';
+    btn.classList.add('sent');
+    btn.disabled = true;
+  }
+</script>
+</body>
+</html>
