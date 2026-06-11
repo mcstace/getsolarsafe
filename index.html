@@ -438,6 +438,89 @@
       font-size: 0.78rem; font-weight: 700; color: var(--muted);
     }
 
+    /* Testimonial + job photos layout */
+    .testimonial-flex {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 24px;
+      margin-top: 32px;
+      align-items: stretch;
+    }
+    .testimonial-flex .testimonial-card { margin-top: 0; }
+
+    /* Job photo carousel */
+    .job-gallery {
+      background: white;
+      border: 1px solid rgba(245,135,26,0.2);
+      border-radius: 14px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .job-gallery-label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 12px;
+    }
+    .carousel-wrap { position: relative; flex: 1; min-height: 0; }
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 10px;
+      border-radius: 10px;
+      height: 100%;
+      min-height: 340px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+    .carousel .slide {
+      flex: 0 0 100%;
+      scroll-snap-align: center;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .carousel .slide img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      color: var(--black);
+      font-size: 1.1rem; font-weight: 800;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+      z-index: 2;
+    }
+    .carousel-btn:hover { background: white; }
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 7px;
+      margin-top: 14px;
+    }
+    .carousel-dots .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border);
+      border: none; padding: 0; cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .carousel-dots .dot.active { background: var(--orange); transform: scale(1.25); }
+    .job-gallery-hint {
+      text-align: center;
+      font-size: 0.75rem; color: var(--muted); font-weight: 600;
+      margin-top: 8px;
+    }
+
     /* CTA band */
     .cta-band { background: var(--orange); padding: 64px 48px; }
     .cta-in {
@@ -541,6 +624,8 @@
       .testimonial-section { padding: 56px 20px; }
       .testimonial-card { padding: 32px 24px; }
       .testimonial-text { font-size: 0.95rem; }
+      .testimonial-flex { grid-template-columns: 1fr; }
+      .carousel { min-height: 300px; }
       footer { padding: 24px 20px 96px; flex-direction: column; align-items: flex-start; }
       .mobile-action-bar { display: flex; }
     }
@@ -602,6 +687,7 @@
   <div class="testimonial-inner">
     <div class="testimonial-label">5-star Google review</div>
     <h2 style="max-width:560px;">This is what your <span>neighbors</span> say about us.</h2>
+    <div class="testimonial-flex">
     <div class="testimonial-card">
       <div class="testimonial-quote-mark">"</div>
       <div class="testimonial-stars">
@@ -631,6 +717,25 @@
         </div>
       </div>
     </div>
+
+    <!-- Photos from this job -->
+    <div class="job-gallery">
+      <div class="job-gallery-label">Photos from this job</div>
+      <div class="carousel-wrap">
+        <div class="carousel" id="jobCarousel">
+          <div class="slide"><img src="https://i.imgur.com/KS47r3g.jpeg" alt="Solar Safe job photo 1" loading="lazy" /></div>
+          <div class="slide"><img src="https://i.imgur.com/YLTkWFx.jpeg" alt="Solar Safe job photo 2" loading="lazy" /></div>
+          <div class="slide"><img src="https://i.imgur.com/9sACu4g.jpeg" alt="Solar Safe job photo 3" loading="lazy" /></div>
+          <div class="slide"><img src="https://i.imgur.com/eyCF4Xr.jpeg" alt="Solar Safe job photo 4" loading="lazy" /></div>
+          <div class="slide"><img src="https://i.imgur.com/nhhLOKe.jpeg" alt="Solar Safe job photo 5" loading="lazy" /></div>
+        </div>
+        <button class="carousel-btn prev" aria-label="Previous photo" onclick="moveCarousel(-1)">‹</button>
+        <button class="carousel-btn next" aria-label="Next photo" onclick="moveCarousel(1)">›</button>
+      </div>
+      <div class="carousel-dots" id="jobDots"></div>
+      <div class="job-gallery-hint">Swipe to see the work</div>
+    </div>
+    </div><!-- /.testimonial-flex -->
   </div>
 </div>
 
@@ -873,6 +978,41 @@
     Text Us
   </a>
 </div>
+<script>
+  // Job photo carousel: arrows, dots, and swipe (native scroll-snap)
+  (function () {
+    var carousel = document.getElementById('jobCarousel');
+    var dotsWrap = document.getElementById('jobDots');
+    if (!carousel || !dotsWrap) return;
+    var slides = carousel.querySelectorAll('.slide');
+
+    slides.forEach(function (_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+      dot.addEventListener('click', function () {
+        carousel.scrollTo({ left: carousel.clientWidth * i, behavior: 'smooth' });
+      });
+      dotsWrap.appendChild(dot);
+    });
+
+    function currentIndex() {
+      return Math.round(carousel.scrollLeft / carousel.clientWidth);
+    }
+
+    window.moveCarousel = function (dir) {
+      var next = Math.max(0, Math.min(slides.length - 1, currentIndex() + dir));
+      carousel.scrollTo({ left: carousel.clientWidth * next, behavior: 'smooth' });
+    };
+
+    carousel.addEventListener('scroll', function () {
+      var idx = currentIndex();
+      dotsWrap.querySelectorAll('.dot').forEach(function (d, i) {
+        d.classList.toggle('active', i === idx);
+      });
+    }, { passive: true });
+  })();
+</script>
 
 </body>
 </html>
